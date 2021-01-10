@@ -1,8 +1,8 @@
 ﻿namespace EasyAuth.Interfaces
 {
-    public interface IEncryptionUtil
+    public interface IEncryptionUtils
     {
-        public string EncryptPassword(string plainTextPassword);
+        //public string EncryptPassword(string plainTextPassword);
 
         public bool IsPasswordValid(string plainTextPassword, string hashedPassword);
     }

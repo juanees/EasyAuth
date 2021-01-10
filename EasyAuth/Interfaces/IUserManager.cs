@@ -2,18 +2,17 @@
 {
     public interface IUserManager
     {
-        public IUserToken? GetUserToken();
-
-        public bool HasUserToken();
-
-        public bool IsGranted(params string[] roles);
-
-        public IUserToken CreateUserToken(IUser user);
-
         public bool Login(string userName, string plainTextPassword);
 
         public void Logout();
 
-        public IEncryptionUtil EncryptionUtil { get; }
+        public bool TryGetUser(out IUser user);
+
+        public bool HasUser();
+
+        public bool IsGranted(params string[] roles);
+
+        public string CreateUserToken(IUser user);
+
     }
 }
