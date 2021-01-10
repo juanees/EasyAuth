@@ -13,6 +13,5 @@
         public bool IsGranted(params string[] roles);
 
         public string CreateUserToken(IUser user);
-
     }
 }

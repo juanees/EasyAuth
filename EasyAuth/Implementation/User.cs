@@ -6,7 +6,6 @@ namespace EasyAuth.Implementation
     public class User : IUser
     {
         private string userName;
-        private string encryptedPassword;
         private string[] roles;
         private bool enabled = false;
 

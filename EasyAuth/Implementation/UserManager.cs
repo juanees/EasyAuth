@@ -7,11 +7,11 @@ namespace EasyAuth.Implementation
     {
         private readonly IAuthenticateUserManager authenticateUser;
         private readonly ISessionUserManager sessionManager;
-        
+
         public UserManager(IAuthenticateUserManager authenticateUser, ISessionUserManager sessionManager)
         {
             this.authenticateUser = authenticateUser;
-            
+
             this.sessionManager = sessionManager;
         }
 
@@ -31,7 +31,7 @@ namespace EasyAuth.Implementation
 
         public bool TryGetUser(out IUser user)
         {
-            if (sessionManager.TryGetUserFromSession(out user)) 
+            if (sessionManager.TryGetUserFromSession(out user))
             {
                 return true;
             }
@@ -56,6 +56,5 @@ namespace EasyAuth.Implementation
         {
             return string.Empty;
         }
-
     }
 }
