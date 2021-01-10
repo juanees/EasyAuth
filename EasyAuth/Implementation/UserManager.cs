@@ -5,33 +5,33 @@ namespace EasyAuth.Implementation
 {
     public class UserManager : IUserManager
     {
-        private readonly IAuthenticateUserManager authenticateUser;
-        private readonly ISessionUserManager sessionManager;
+        private readonly IAuthenticateUserManager authenticateUserManager;
+        private readonly ISessionUserManager sessionUserManager;
 
-        public UserManager(IAuthenticateUserManager authenticateUser, ISessionUserManager sessionManager)
+        public UserManager(IAuthenticateUserManager authenticateUserManager, ISessionUserManager sessionUserManager)
         {
-            this.authenticateUser = authenticateUser;
+            this.authenticateUserManager = authenticateUserManager;
 
-            this.sessionManager = sessionManager;
+            this.sessionUserManager = sessionUserManager;
         }
 
         public bool Login(string userName, string plainTextPassword)
         {
-            if (authenticateUser.TryAuthenticateUser(userName, plainTextPassword, out IUser user))
+            if (authenticateUserManager.TryAuthenticateUser(userName, plainTextPassword, out IUser user))
             {
-                return sessionManager.SaveUserToSession(user);
+                return sessionUserManager.SaveUserToSession(user);
             }
             return false;
         }
 
         public void Logout()
         {
-            sessionManager.RemoveUserFromSession();
+            sessionUserManager.RemoveUserFromSession();
         }
 
         public bool TryGetUser(out IUser user)
         {
-            if (sessionManager.TryGetUserFromSession(out user))
+            if (sessionUserManager.TryGetUserFromSession(out user))
             {
                 return true;
             }
@@ -45,16 +45,16 @@ namespace EasyAuth.Implementation
 
         public bool IsGranted(params string[] roles)
         {
-            if (sessionManager.TryGetUserFromSession(out IUser user))
+            if (sessionUserManager.TryGetUserFromSession(out IUser user))
             {
                 return user.Roles.Intersect(roles).Count() > 0;
             }
             return false;
         }
 
-        public string CreateUserToken(IUser user)
+        public string SerializeUser(IUserSerializationStrategy userSerialization, IUser user)
         {
-            return string.Empty;
+            return userSerialization.Serialize(user);
         }
     }
 }
